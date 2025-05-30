@@ -1,0 +1,8 @@
+asgiref==3.8.1
+Django==4.2.21
+django-dbbackup==4.3.0
+django-htmx==1.23.0
+pytz==2025.2
+sqlparse==0.5.3
+typing_extensions==4.13.2
+tzdata==2025.2
