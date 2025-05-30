@@ -1,3 +1,5 @@
+import os
+
 """
 Django settings for taskmanager project.
 
@@ -20,12 +22,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-c!rlms=8zux9&f42g0)3s3#9-n$5q-qu%-w7@1irlit@utw_9%'
+# SECRET_KEY = 'django-insecure-c!rlms=8zux9&f42g0)3s3#9-n$5q-qu%-w7@1irlit@utw_9%'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = bool(os.environ.get("DEBUG", default=0))
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+print(os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1"))
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1").split(",")
+print(ALLOWED_HOSTS)
 
 
 # Application definition
