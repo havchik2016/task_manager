@@ -1,0 +1,10 @@
+<form id="pform-{{ project.id }}"
+    method="POST"
+    hx-post="{% url 'project_edit' project.id %}"
+    hx-target="#pform-{{ project.id }}"
+    hx-swap="outerHTML"
+>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add user</button>
+</form>

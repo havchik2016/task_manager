@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Manager</title>
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+    <!-- This script is what attaches HTMX to your html file -->
+</head>
+<body>
+    <h1>Task Manager</h1>
+    <h2>Adding Projects</h2>
+    <h3>Currenly available projects:</h3>
+    {% for project in projects %}
+        {% for pr in current %}
+            {% if project.project_name == pr %}
+                {{ admins }}
+                {% include 'partials/project_item.html' with project=project admins=admins current_user=current_user %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    <br>
+    <h2>Add a Project</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ projectform.as_p }}
+        <button type="submit">Add Project</button>
+    </form>
+    <br>
+    <h2>User Changer</h2>
+    Current user: {{ current_user }}<br>
+    <form
+        method="POST"
+    >
+        {% csrf_token %}
+        {{ userform.as_p }}
+        <button type="submit">Change User</button>
+    </form>
+    <br>
+    <h2>Adding Tasks</h2>
+    <form
+        method="POST"
+        hx-post="{% url 'task_list' %}"
+        hx-target="#task-list"
+        hx-swap="beforeend"
+    >
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Task</button>
+    </form>
+    <br>
+    <h2>Filter Tasks</h2>
+    <form
+        method="POST"
+    >
+        {% csrf_token %}
+        {{ filterform.as_p }}
+        <button type="submit">Filter</button>
+    </form>
+    <br>
+    <h2>Tasks</h2>
+    <hr>
+    <div id="task-list">
+        {% for task in tasks %}
+            {% if current_user == task.user %}
+                {% if priority_filter == "None" %}
+                    {% if status_filter == "None" %}
+                        {% include 'partials/task_item.html' with task=task %}
+                    {% elif task.status == status_filter %}
+                        {% include 'partials/task_item.html' with task=task %}
+                    {% endif %}
+                {% elif task.priority == priority_filter %}
+                    {% if status_filter == "None" %}
+                        {% include 'partials/task_item.html' with task=task %}
+                    {% elif task.status == status_filter %}
+                        {% include 'partials/task_item.html' with task=task %}
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+</body>
+</html>

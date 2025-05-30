@@ -1,0 +1,27 @@
+<div id="task-{{ task.id }}" class="task-item" style="margin-bottom: 10px;">
+    <strong>{{ task.name }}</strong><br>
+    <small>{{ task.description }}</small><br>
+    Status: {{ task.status }}<br>
+    Priority: {{ task.priority }}<br>
+    Project: {{ task.project }}<br>
+    Deadline: {{ task.deadline }}<br>
+    Created by: {{ task.user }}<br>
+    <em>{{ task.created_at }}</em>
+    <br>
+    <button
+        hx-get="{% url 'task_edit' task.id %}"
+        hx-target="#task-{{ task.id }}"
+        hx-swap="outerHTML"
+    >
+        Edit
+    </button>
+    <button id="delete"
+        hx-post="{% url 'task_delete' task.id %}"
+        hx-target="#task-{{ task.id }}"
+        hx-swap="outerHTML"
+    >
+        {% csrf_token %}
+        Delete
+    </button>
+    <hr>
+</div>

@@ -1,0 +1,10 @@
+<form id="form-{{ task.id }}"
+    method="POST"
+    hx-post="{% url 'task_edit' task.id %}"
+    hx-target="#form-{{ task.id }}"
+    hx-swap="outerHTML"
+>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>

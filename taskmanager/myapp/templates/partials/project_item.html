@@ -1,0 +1,21 @@
+<div id="project-{{ project.id }}" class="project-item" style="margin-bottom: 10px;">
+    <strong>{{ project.project_name }}</strong><br>
+    <small>{{ project.project_description }}</small><br>
+    Availability: {{ project.project_type }}<br>
+    <button
+                hx-get="{% url 'project_edit' project.id %}"
+                hx-target="#project-{{ project.id }}"
+                hx-swap="outerHTML"
+        >
+        Edit
+    </button>
+    <button
+            hx-get="{% url 'add_user' project.id %}"
+            hx-target="#project-{{ project.id }}"
+            hx-swap="outerHTML"
+    >
+        Add User
+    </button>
+    <br>
+    <hr>
+</div>
